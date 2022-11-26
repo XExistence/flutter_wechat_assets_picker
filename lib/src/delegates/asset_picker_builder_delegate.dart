@@ -7,6 +7,7 @@ import 'dart:math' as math;
 import 'dart:typed_data' as typed_data;
 import 'dart:ui' as ui;
 
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -903,7 +904,7 @@ class DefaultAssetPickerBuilderDelegate
         if (!isAppleOS && (isPreviewEnabled || !isSingleAssetMode))
           confirmButton(context),
       ],
-      actionsPadding: const EdgeInsetsDirectional.only(end: 14),
+      //actionsPadding: const EdgeInsetsDirectional.only(end: 14),
       blurRadius: isAppleOS ? appleOSBlurRadius : 0,
     );
   }
@@ -1468,35 +1469,28 @@ class DefaultAssetPickerBuilderDelegate
   Widget confirmButton(BuildContext context) {
     return Consumer<DefaultAssetPickerProvider>(
       builder: (_, DefaultAssetPickerProvider p, __) {
-        return MaterialButton(
-          minWidth: p.isSelectedNotEmpty ? 48 : 20,
-          height: appBarItemHeight,
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          color: theme.colorScheme.secondary,
-          disabledColor: theme.dividerColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(3),
-          ),
-          onPressed: p.isSelectedNotEmpty
-              ? () => Navigator.of(context).maybePop(p.selectedAssets)
-              : null,
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          child: ScaleText(
-            p.isSelectedNotEmpty && !isSingleAssetMode
-                ? '${textDelegate.confirm}'
-                    ' (${p.selectedAssets.length}/${p.maxAssets})'
-                : textDelegate.confirm,
-            style: TextStyle(
-              color: p.isSelectedNotEmpty
-                  ? theme.textTheme.bodyText1?.color
-                  : theme.textTheme.caption?.color,
-              fontSize: 17,
-              fontWeight: FontWeight.normal,
+        return Container(
+          width: 50,
+          height: 50,
+          //color: Colors.red,
+          child: RawMaterialButton(
+            // minWidth: p.isSelectedNotEmpty ? 48 : 20,
+            // height: appBarItemHeight,
+            // padding: const EdgeInsets.symmetric(horizontal: 12),
+            // color: theme.colorScheme.secondary,
+            // disabledColor: theme.dividerColor,
+            shape: CircleBorder(),
+            onPressed: p.isSelectedNotEmpty
+                ? () => Navigator.of(context).maybePop(p.selectedAssets)
+                : null,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            child: Icon(
+              EvaIcons.checkmarkCircle2Outline,
+              size: 25,
+              // color: options.brightness == Brightness.dark
+              //     ? Colors.white
+              //     : Colors.black87,
             ),
-            semanticsLabel: p.isSelectedNotEmpty && !isSingleAssetMode
-                ? '${semanticsTextDelegate.confirm}'
-                    ' (${p.selectedAssets.length}/${p.maxAssets})'
-                : semanticsTextDelegate.confirm,
           ),
         );
       },

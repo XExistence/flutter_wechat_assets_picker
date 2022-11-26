@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' show basename;
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../../constants/screens.dart';
@@ -759,8 +760,6 @@ class FileAssetPickerBuilder
             minWidth: provider.isSelectedNotEmpty ? 48.0 : 20.0,
             height: appBarItemHeight,
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            color:
-                provider.isSelectedNotEmpty ? themeColor : theme.dividerColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(3.0),
             ),
@@ -1449,25 +1448,12 @@ class FileAssetPickerViewerBuilderDelegate
               }
             },
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            child: Text(
-              () {
-                if (provider.isSelectedNotEmpty) {
-                  return '${textDelegate.confirm}'
-                      '(${provider.currentlySelectedAssets.length}'
-                      '/'
-                      '${selectorProvider!.maxAssets})';
-                }
-                return textDelegate.confirm;
-              }(),
-              style: TextStyle(
-                color: () {
-                  return provider.isSelectedNotEmpty
-                      ? themeData.textTheme.bodyText1?.color
-                      : themeData.textTheme.caption?.color;
-                }(),
-                fontSize: 17.0,
-                fontWeight: FontWeight.normal,
-              ),
+            child: Icon(
+              EvaIcons.checkmarkCircle2Outline,
+              size: 25,
+              // color: options.brightness == Brightness.dark
+              //     ? Colors.white
+              //     : Colors.black87,
             ),
           );
         },

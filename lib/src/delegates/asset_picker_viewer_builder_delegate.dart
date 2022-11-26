@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -723,25 +724,6 @@ class DefaultAssetPickerViewerBuilderDelegate
                 ),
               ),
             ),
-            if (!isAppleOS && specialPickerType == null)
-              Expanded(
-                child: Center(
-                  child: Semantics(
-                    sortKey: ordinalSortKey(0.1),
-                    child: StreamBuilder<int>(
-                      initialData: currentIndex,
-                      stream: pageStreamController.stream,
-                      builder: (_, AsyncSnapshot<int> snapshot) => ScaleText(
-                        '${snapshot.data! + 1}/${previewAssets.length}',
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             if (isAppleOS && provider != null)
               Expanded(
                 child: Align(
@@ -760,8 +742,10 @@ class DefaultAssetPickerViewerBuilderDelegate
                   alignment: AlignmentDirectional.centerEnd,
                   child: Semantics(
                     sortKey: ordinalSortKey(0.3),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.only(end: 14),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      padding: EdgeInsets.only(right: 15),
                       child: confirmButton(context),
                     ),
                   ),
@@ -806,56 +790,28 @@ class DefaultAssetPickerViewerBuilderDelegate
             }
           }
 
-          String buildText() {
-            if (isWeChatMoment && hasVideo) {
-              return textDelegate.confirm;
-            }
-            if (provider!.isSelectedNotEmpty) {
-              return '${textDelegate.confirm}'
-                  ' (${provider.currentlySelectedAssets.length}'
-                  '/'
-                  '${selectorProvider!.maxAssets})';
-            }
-            return textDelegate.confirm;
-          }
-
           final bool isButtonEnabled = provider == null ||
               provider.currentlySelectedAssets.isNotEmpty ||
               previewAssets.isEmpty ||
               selectedNotifier.value == 0;
-          return MaterialButton(
-            minWidth:
-                (isWeChatMoment && hasVideo) || provider!.isSelectedNotEmpty
-                    ? 48
-                    : 20,
-            height: 32,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            color: themeData.colorScheme.secondary,
-            disabledColor: themeData.dividerColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(3),
-            ),
+          return RawMaterialButton(
+            // minWidth:
+            //     (isWeChatMoment && hasVideo) || provider!.isSelectedNotEmpty
+            //         ? 48
+            //         : 20,
+            // height: 32,
+            // padding: const EdgeInsets.symmetric(horizontal: 12),
+            // color: themeData.colorScheme.secondary,
+            // dis: themeData.dividerColor,
+            shape: CircleBorder(),
             onPressed: isButtonEnabled ? onPressed : null,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            child: ScaleText(
-              buildText(),
-              style: TextStyle(
-                color: themeData.textTheme.bodyText1?.color,
-                fontSize: 17,
-                fontWeight: FontWeight.normal,
-              ),
-              semanticsLabel: () {
-                if (isWeChatMoment && hasVideo) {
-                  return semanticsTextDelegate.confirm;
-                }
-                if (provider!.isSelectedNotEmpty) {
-                  return '${semanticsTextDelegate.confirm}'
-                      ' (${provider.currentlySelectedAssets.length}'
-                      '/'
-                      '${selectorProvider!.maxAssets})';
-                }
-                return semanticsTextDelegate.confirm;
-              }(),
+            child: Icon(
+              EvaIcons.checkmarkCircle,
+              size: 25,
+              // color: options.brightness == Brightness.dark
+              //     ? Colors.white
+              //     : Colors.black87,
             ),
           );
         },
@@ -905,9 +861,10 @@ class DefaultAssetPickerViewerBuilderDelegate
     AssetEntity asset,
   ) {
     return Checkbox(
+      checkColor: Colors.red,
       value: isSelected,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(999999),
+        borderRadius: BorderRadius.circular(10),
       ),
       onChanged: (_) => onChangingSelected(context, asset, isSelected),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
