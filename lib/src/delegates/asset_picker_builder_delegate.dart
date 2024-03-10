@@ -524,7 +524,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
   /// 底部操作栏部件
   Widget bottomActionBar(BuildContext context) {
     Widget child = Container(
-      height: bottomActionBarHeight + context.bottomPadding,
+      //height: bottomActionBarHeight + context.bottomPadding,
       padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(
         bottom: context.bottomPadding,
       ),
@@ -1500,8 +1500,8 @@ class DefaultAssetPickerBuilderDelegate
         final bool shouldAllowConfirm =
             isSelectedNotEmpty || p.previousSelectedAssets.isNotEmpty;
         return MaterialButton(
-          minWidth: 50,
-          height: 50,
+          minWidth: 60,
+          height: 60,
           padding: const EdgeInsets.symmetric(horizontal: 12),
           color: theme.colorScheme.secondary,
           disabledColor: theme.splashColor,
@@ -1514,7 +1514,7 @@ class DefaultAssetPickerBuilderDelegate
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           child: Icon(
             Icons.add,
-            size: 20,
+            size: 23,
             color: theme.colorScheme.inversePrimary,
           ),
         );
@@ -1910,8 +1910,8 @@ class DefaultAssetPickerBuilderDelegate
       },
       child: Consumer<DefaultAssetPickerProvider>(
         builder: (context, DefaultAssetPickerProvider p, __) => MaterialButton(
-          minWidth: 50,
-          height: 50,
+          minWidth: 60,
+          height: 60,
           padding: const EdgeInsets.symmetric(horizontal: 12),
           color: theme.colorScheme.secondary,
           disabledColor: theme.splashColor,
@@ -1923,8 +1923,8 @@ class DefaultAssetPickerBuilderDelegate
               : null,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           child: Icon(
-            Icons.image_outlined,
-            size: 20,
+            Icons.remove_red_eye_outlined,
+            size: 23,
             color: theme.colorScheme.inversePrimary,
           ),
         ),
@@ -2110,7 +2110,7 @@ class DefaultAssetPickerBuilderDelegate
   @override
   Widget bottomActionBar(BuildContext context) {
     Widget child = Container(
-      height: bottomActionBarHeight + context.bottomPadding,
+      //height: bottomActionBarHeight + context.bottomPadding,
       padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(
         bottom: context.bottomPadding,
       ),
