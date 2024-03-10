@@ -861,7 +861,7 @@ class DefaultAssetPickerViewerBuilderDelegate
                 ? Border.all(color: themeData.iconTheme.color!)
                 : null,
             color: isSelected ? themeData.colorScheme.secondary : null,
-            shape: BoxShape.circle,
+            shape: BoxShape.rectangle,
           ),
           child: const Center(child: Icon(Icons.check, size: 20.0)),
         ),
@@ -878,9 +878,9 @@ class DefaultAssetPickerViewerBuilderDelegate
   ) {
     return Checkbox(
       value: isSelected,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(999999),
-      ),
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(999999),
+      // ),
       onChanged: (_) => onChangingSelected(context, asset, isSelected),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
