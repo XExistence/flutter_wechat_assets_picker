@@ -1728,7 +1728,7 @@ class DefaultAssetPickerBuilderDelegate
           isSwitchingPath.value = !isSwitchingPath.value;
         },
         child: Container(
-          height: appBarItemHeight,
+          //height: appBarItemHeight,
           constraints: BoxConstraints(
             maxWidth: MediaQuery.sizeOf(context).width * 0.5,
           ),
@@ -1909,29 +1909,23 @@ class DefaultAssetPickerBuilderDelegate
         );
       },
       child: Consumer<DefaultAssetPickerProvider>(
-        builder: (context, DefaultAssetPickerProvider p, __) => GestureDetector(
-          onTap: p.isSelectedNotEmpty
+        builder: (context, DefaultAssetPickerProvider p, __) => MaterialButton(
+          minWidth: 50,
+          height: 50,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          color: theme.colorScheme.secondary,
+          disabledColor: theme.splashColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          onPressed: p.isSelectedNotEmpty
               ? () => viewAsset(context, null, p.selectedAssets.first)
               : null,
-          child: Selector<DefaultAssetPickerProvider, String>(
-            selector: (_, DefaultAssetPickerProvider p) =>
-                p.selectedDescriptions,
-            builder: (BuildContext c, __, ___) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: ScaleText(
-                '${textDelegate.preview}'
-                '${p.isSelectedNotEmpty ? ' (${p.selectedAssets.length})' : ''}',
-                style: TextStyle(
-                  color: p.isSelectedNotEmpty
-                      ? null
-                      : c.textTheme.bodySmall?.color,
-                  fontSize: 17,
-                ),
-                maxScaleFactor: 1.2,
-                semanticsLabel: '${semanticsTextDelegate.preview}'
-                    '${p.isSelectedNotEmpty ? ' (${p.selectedAssets.length})' : ''}',
-              ),
-            ),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          child: Icon(
+            Icons.image_outlined,
+            size: 20,
+            color: theme.colorScheme.inversePrimary,
           ),
         ),
       ),
