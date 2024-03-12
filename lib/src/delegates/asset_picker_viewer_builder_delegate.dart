@@ -144,7 +144,7 @@ abstract class AssetPickerViewerBuilderDelegate<Asset, Path> {
 
   /// Height for bottom bar widget.
   /// 底栏部件的高度
-  double get bottomBarHeight => 50.0;
+  double get bottomBarHeight => 60.0;
 
   double get bottomDetailHeight => bottomPreviewHeight + bottomBarHeight;
 
@@ -552,7 +552,8 @@ class DefaultAssetPickerViewerBuilderDelegate
       builder: (_, bool v, __, Widget? child) => AnimatedPositionedDirectional(
         duration: kThemeAnimationDuration,
         curve: Curves.easeInOut,
-        bottom: v ? 0 : -(context.bottomPadding + bottomDetailHeight),
+        // bottom: v ? 0 : -(context.bottomPadding + bottomDetailHeight),
+        bottom: v ? 0 : 0,
         start: 0,
         end: 0,
         height: context.bottomPadding + bottomDetailHeight,
@@ -671,26 +672,31 @@ class DefaultAssetPickerViewerBuilderDelegate
                   ) {
                     final bool isSelected =
                         currentlySelectedAssets?.contains(asset) ?? false;
-                    return Stack(
-                      children: <Widget>[
-                        w!,
-                        AnimatedContainer(
-                          duration: kThemeAnimationDuration,
-                          curve: Curves.easeInOut,
-                          decoration: BoxDecoration(
-                            border: isViewing
-                                ? Border.all(
-                                    color: themeData.colorScheme.secondary,
-                                    width: 3,
-                                  )
-                                : null,
-                            color: isSelected
-                                ? null
-                                : themeData.colorScheme.surface
-                                    .withOpacity(0.54),
-                          ),
-                        ),
-                      ],
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Stack(
+                        children: <Widget>[
+                          w!,
+                          AnimatedContainer(
+                            duration: kThemeAnimationDuration,
+                            curve: Curves.easeInOut,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(15),
+                              border: isViewing
+                                  ? Border.all(
+                                      color: themeData.colorScheme.secondary,
+                                      width: 3,
+                                    )
+                                  : null,
+                              color: isSelected
+                                  ? null
+                                  : themeData.colorScheme.surface
+                                      .withOpacity(0.54),
+                            ),
+                          )
+                        ],
+                      ),
                     );
                   },
                 ),
@@ -718,22 +724,22 @@ class DefaultAssetPickerViewerBuilderDelegate
         ),
       ),
       centerTitle: true,
-      title: specialPickerType == null
-          ? Semantics(
-              sortKey: ordinalSortKey(0.1),
-              child: StreamBuilder<int>(
-                initialData: currentIndex,
-                stream: pageStreamController.stream,
-                builder: (_, AsyncSnapshot<int> snapshot) => ScaleText(
-                  '${snapshot.requireData + 1}/${previewAssets.length}',
-                  style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            )
-          : null,
+      // title: specialPickerType == null
+      //     ? Semantics(
+      //         sortKey: ordinalSortKey(0.1),
+      //         child: StreamBuilder<int>(
+      //           initialData: currentIndex,
+      //           stream: pageStreamController.stream,
+      //           builder: (_, AsyncSnapshot<int> snapshot) => ScaleText(
+      //             '${snapshot.requireData + 1}/${previewAssets.length}',
+      //             style: const TextStyle(
+      //               fontSize: 17,
+      //               fontWeight: FontWeight.w500,
+      //             ),
+      //           ),
+      //         ),
+      //       )
+      //     : null,
       actions: [
         if (provider != null)
           Semantics(
@@ -796,38 +802,21 @@ class DefaultAssetPickerViewerBuilderDelegate
           return MaterialButton(
             minWidth:
                 (isWeChatMoment && hasVideo) || provider!.isSelectedNotEmpty
-                    ? 48
-                    : 20,
-            height: 32,
+                    ? 60
+                    : 60,
+            height: 60,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             color: themeData.colorScheme.secondary,
             disabledColor: themeData.splashColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(3),
+              borderRadius: BorderRadius.circular(15),
             ),
             onPressed: isButtonEnabled ? onPressed : null,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            child: ScaleText(
-              buildText(),
-              style: TextStyle(
-                color: themeData.textTheme.bodyLarge?.color,
-                fontSize: 17,
-                fontWeight: FontWeight.normal,
-              ),
-              overflow: TextOverflow.fade,
-              softWrap: false,
-              semanticsLabel: () {
-                if (isWeChatMoment && hasVideo) {
-                  return semanticsTextDelegate.confirm;
-                }
-                if (provider!.isSelectedNotEmpty) {
-                  return '${semanticsTextDelegate.confirm}'
-                      ' (${provider.currentlySelectedAssets.length}'
-                      '/'
-                      '${selectorProvider!.maxAssets})';
-                }
-                return semanticsTextDelegate.confirm;
-              }(),
+            child: Icon(
+              Icons.add,
+              size: 23,
+              color: themeData.colorScheme.inversePrimary,
             ),
           );
         },
@@ -876,13 +865,16 @@ class DefaultAssetPickerViewerBuilderDelegate
     bool isSelected,
     AssetEntity asset,
   ) {
-    return Checkbox(
-      value: isSelected,
-      // shape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.circular(999999),
-      // ),
-      onChanged: (_) => onChangingSelected(context, asset, isSelected),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    return Transform.scale(
+      scale: 1.1,
+      child: Checkbox(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(3),
+        ),
+        value: isSelected,
+        onChanged: (_) => onChangingSelected(context, asset, isSelected),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
     );
   }
 
@@ -916,12 +908,6 @@ class DefaultAssetPickerViewerBuilderDelegate
                       _appleOSSelectButton(context, isSelected, asset)
                     else
                       _androidSelectButton(context, isSelected, asset),
-                    if (!isAppleOS(context))
-                      ScaleText(
-                        textDelegate.select,
-                        style: const TextStyle(fontSize: 17, height: 1.2),
-                        semanticsLabel: semanticsTextDelegate.select,
-                      ),
                   ],
                 ),
               );

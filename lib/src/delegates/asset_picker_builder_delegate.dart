@@ -47,6 +47,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
     this.limitedPermissionOverlayPredicate,
     this.pathNameBuilder,
     Color? themeColor,
+    this.logo,
     AssetPickerTextDelegate? textDelegate,
     Locale? locale,
   })  : assert(gridCount > 0, 'gridCount must be greater than 0.'),
@@ -72,6 +73,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
   /// Main color for the picker.
   /// 选择器的主题色
   final Color? themeColor;
+  final Widget? logo;
 
   /// Theme for the picker.
   /// 选择器的主题
@@ -680,6 +682,7 @@ class DefaultAssetPickerBuilderDelegate
     super.limitedPermissionOverlayPredicate,
     super.pathNameBuilder,
     super.themeColor,
+    super.logo,
     super.textDelegate,
     super.locale,
     this.gridThumbnailSize = defaultAssetGridPreviewSize,
@@ -932,12 +935,14 @@ class DefaultAssetPickerBuilderDelegate
   @override
   AssetPickerAppBar appBar(BuildContext context) {
     final AssetPickerAppBar appBar = AssetPickerAppBar(
-      title: Semantics(
-        onTapHint: semanticsTextDelegate.sActionSwitchPathLabel,
-        child: pathEntitySelector(context),
+      title: SizedBox(
+        child: logo,
+        width: 40,
+        height: 40,
       ),
       leading: backButton(context),
       blurRadius: isAppleOS(context) ? appleOSBlurRadius : 0,
+      actions: [pathEntitySelector(context)],
     );
     appBarPreferredSize ??= appBar.preferredSize;
     return appBar;
@@ -1715,6 +1720,29 @@ class DefaultAssetPickerBuilderDelegate
       );
     }
 
+    /// Folder action.
+    /// 返回按钮
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: IconButton(
+        onPressed: () {
+          if (isPermissionLimited && provider.isAssetsEmpty) {
+            PhotoManager.presentLimited();
+            return;
+          }
+          if (provider.currentPath == null) {
+            return;
+          }
+          isSwitchingPath.value = !isSwitchingPath.value;
+        },
+        tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+        icon: Icon(
+          Icons.folder_outlined,
+          semanticLabel: MaterialLocalizations.of(context).closeButtonTooltip,
+        ),
+      ),
+    );
+
     return UnconstrainedBox(
       child: GestureDetector(
         onTap: () {
@@ -1966,6 +1994,7 @@ class DefaultAssetPickerBuilderDelegate
           height: indicatorSize / (isAppleOS(context) ? 1.25 : 1.5),
           padding: EdgeInsets.all(indicatorSize / 10),
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
             border: !selected
                 ? Border.all(
                     color: context.theme.unselectedWidgetColor,
@@ -1973,7 +2002,7 @@ class DefaultAssetPickerBuilderDelegate
                   )
                 : null,
             color: selected ? themeColor : null,
-            shape: BoxShape.circle,
+            shape: BoxShape.rectangle,
           ),
           child: FittedBox(
             child: AnimatedSwitcher(

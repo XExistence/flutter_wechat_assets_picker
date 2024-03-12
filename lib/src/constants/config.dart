@@ -27,6 +27,7 @@ class AssetPickerConfig {
     this.filterOptions,
     this.gridCount = 4,
     this.themeColor,
+    this.logo,
     this.pickerTheme,
     this.textDelegate,
     this.specialItemPosition = SpecialItemPosition.none,
@@ -68,6 +69,7 @@ class AssetPickerConfig {
   /// Maximum count for asset selection.
   /// 资源选择的最大数量
   final int maxAssets;
+  final Widget? logo;
 
   /// Assets should be loaded per page.
   /// 资源选择的最大数量
