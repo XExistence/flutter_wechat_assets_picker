@@ -144,7 +144,7 @@ abstract class AssetPickerViewerBuilderDelegate<Asset, Path> {
 
   /// Height for bottom bar widget.
   /// 底栏部件的高度
-  double get bottomBarHeight => 60.0;
+  double get bottomBarHeight => 80.0;
 
   double get bottomDetailHeight => bottomPreviewHeight + bottomBarHeight;
 
@@ -586,12 +586,14 @@ class DefaultAssetPickerViewerBuilderDelegate
               height: bottomBarHeight + context.bottomPadding,
               padding: const EdgeInsets.symmetric(horizontal: 20.0)
                   .copyWith(bottom: context.bottomPadding),
+              //margin: const EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
                 border: Border(top: BorderSide(color: themeData.canvasColor)),
                 color: backgroundColor,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   if (provider != null || isWeChatMoment)
                     confirmButton(context),
@@ -807,7 +809,7 @@ class DefaultAssetPickerViewerBuilderDelegate
             height: 60,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             color: themeData.colorScheme.secondary,
-            disabledColor: themeData.splashColor,
+            disabledColor: themeData.colorScheme.surface,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),

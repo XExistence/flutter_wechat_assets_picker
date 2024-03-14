@@ -530,7 +530,8 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
       padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(
         bottom: context.bottomPadding,
       ),
-      color: theme.primaryColor.withOpacity(isAppleOS(context) ? 0.90 : 1),
+      margin: EdgeInsets.only(top: 10, bottom: 10),
+      //color: Colors.red,
       child: Row(
         children: <Widget>[
           previewButton(context),
@@ -965,10 +966,17 @@ class DefaultAssetPickerBuilderDelegate
                         child: Column(
                           children: <Widget>[
                             Expanded(child: assetsGridBuilder(context)),
-                            if (isPreviewEnabled || !isSingleAssetMode)
-                              bottomActionBar(context),
                           ],
                         ),
+                      ),
+                      Column(
+                        children: [
+                          Expanded(
+                            child: Container(),
+                          ),
+                          if (isPreviewEnabled || !isSingleAssetMode)
+                            bottomActionBar(context),
+                        ],
                       ),
                       pathEntityListBackdrop(context),
                       pathEntityListWidget(context),
@@ -1505,11 +1513,12 @@ class DefaultAssetPickerBuilderDelegate
         final bool shouldAllowConfirm =
             isSelectedNotEmpty || p.previousSelectedAssets.isNotEmpty;
         return MaterialButton(
+          elevation: 8,
           minWidth: 60,
           height: 60,
           padding: const EdgeInsets.symmetric(horizontal: 12),
           color: theme.colorScheme.secondary,
-          disabledColor: theme.splashColor,
+          disabledColor: theme.colorScheme.surfaceTint,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -1942,7 +1951,7 @@ class DefaultAssetPickerBuilderDelegate
           height: 60,
           padding: const EdgeInsets.symmetric(horizontal: 12),
           color: theme.colorScheme.secondary,
-          disabledColor: theme.splashColor,
+          disabledColor: theme.colorScheme.surfaceTint,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -2143,9 +2152,7 @@ class DefaultAssetPickerBuilderDelegate
       padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(
         bottom: context.bottomPadding,
       ),
-      color: theme.bottomAppBarTheme.color?.withOpacity(
-        theme.bottomAppBarTheme.color!.opacity * (isAppleOS(context) ? .9 : 1),
-      ),
+      margin: EdgeInsets.only(top: 20, bottom: 20),
       child: Row(
         children: <Widget>[
           if (isPreviewEnabled) previewButton(context),
