@@ -5,7 +5,6 @@
 import 'dart:io' show Platform;
 import 'dart:math' as math;
 import 'dart:typed_data' as typed_data;
-import 'dart:ui' as ui;
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -546,15 +545,15 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
         children: <Widget>[accessLimitedBottomTip(context), child],
       );
     }
-    child = ClipRect(
-      child: BackdropFilter(
-        filter: ui.ImageFilter.blur(
-          sigmaX: appleOSBlurRadius,
-          sigmaY: appleOSBlurRadius,
-        ),
-        child: child,
-      ),
-    );
+    // child = ClipRect(
+    //   child: BackdropFilter(
+    //     filter: ui.ImageFilter.blur(
+    //       sigmaX: appleOSBlurRadius,
+    //       sigmaY: appleOSBlurRadius,
+    //     ),
+    //     child: child,
+    //   ),
+    // );
     return child;
   }
 
@@ -2167,17 +2166,17 @@ class DefaultAssetPickerBuilderDelegate
         children: <Widget>[accessLimitedBottomTip(context), child],
       );
     }
-    if (isAppleOS(context)) {
-      child = ClipRect(
-        child: BackdropFilter(
-          filter: ui.ImageFilter.blur(
-            sigmaX: appleOSBlurRadius,
-            sigmaY: appleOSBlurRadius,
-          ),
-          child: child,
-        ),
-      );
-    }
+    // if (isAppleOS(context)) {
+    //   child = ClipRect(
+    //     child: BackdropFilter(
+    //       filter: ui.ImageFilter.blur(
+    //         sigmaX: appleOSBlurRadius,
+    //         sigmaY: appleOSBlurRadius,
+    //       ),
+    //       child: child,
+    //     ),
+    //   );
+    // }
     return child;
   }
 
