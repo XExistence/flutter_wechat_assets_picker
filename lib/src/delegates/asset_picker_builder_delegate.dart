@@ -619,21 +619,21 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
       ),
-      onPressed: PhotoManager.openSetting,
+      onPressed: () => permissionOverlayDisplay.value = false,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       child: ScaleText(
-        textDelegate.goToSystemSettings,
+        textDelegate.accessLimitedAssets,
         style: const TextStyle(fontSize: 17),
-        semanticsLabel: semanticsTextDelegate.goToSystemSettings,
+        semanticsLabel: semanticsTextDelegate.accessLimitedAssets,
       ),
     );
 
     final Widget accessLimitedButton = GestureDetector(
-      onTap: () => permissionOverlayDisplay.value = false,
+      onTap: PhotoManager.openSetting,
       child: ScaleText(
-        textDelegate.accessLimitedAssets,
+        textDelegate.goToSystemSettings,
         style: TextStyle(color: interactiveTextColor(context)),
-        semanticsLabel: semanticsTextDelegate.accessLimitedAssets,
+        semanticsLabel: semanticsTextDelegate.goToSystemSettings,
       ),
     );
 

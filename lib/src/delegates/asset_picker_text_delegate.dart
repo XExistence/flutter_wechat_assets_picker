@@ -201,7 +201,7 @@ class EnglishAssetPickerTextDelegate extends AssetPickerTextDelegate {
   String get unSupportedAssetType => 'Unsupported HEIC asset type.';
 
   @override
-  String get unableToAccessAll => 'Unable to access all assets on the device';
+  String get unableToAccessAll => 'Limited Access';
 
   @override
   String get viewingLimitedAssetsTip =>
@@ -212,8 +212,8 @@ class EnglishAssetPickerTextDelegate extends AssetPickerTextDelegate {
       'Click to update accessible assets';
 
   @override
-  String get accessAllTip => 'App can only access some assets on the device. '
-      'Go to system settings and allow app to access all assets on the device.';
+  String get accessAllTip => 'App can only access limited assets on the device. '
+      'Go to system settings and allow app to access assets if missing in selection.';
 
   @override
   String get goToSystemSettings => 'Go to system settings';
