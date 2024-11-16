@@ -190,7 +190,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
 
   /// Height for the permission limited bar.
   /// 权限受限栏的高度
-  double get permissionLimitedBarHeight => isPermissionLimited ? 75 : 0;
+  double get permissionLimitedBarHeight => isPermissionLimited ? 100 : 0;
 
   /// Notifier for the current [PermissionState].
   /// 当前 [PermissionState] 的监听
@@ -941,7 +941,7 @@ class DefaultAssetPickerBuilderDelegate
         height: 40,
       ),
       leading: backButton(context),
-      blurRadius: isAppleOS(context) ? appleOSBlurRadius : 0,
+      blurRadius: 0,
       actions: [pathEntitySelector(context)],
     );
     appBarPreferredSize ??= appBar.preferredSize;
@@ -2207,7 +2207,7 @@ class DefaultAssetPickerBuilderDelegate
                   appleOSLayout(context)
                 else
                   androidLayout(context),
-                if (Platform.isIOS) iOSPermissionOverlay(context),
+                //if (Platform.isIOS) iOSPermissionOverlay(context),
               ],
             ),
           ),

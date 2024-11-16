@@ -1189,7 +1189,7 @@ class FileAssetPickerBuilder
               fit: StackFit.expand,
               children: <Widget>[
                 if (isAppleOS(context)) appleOSLayout(c) else androidLayout(c),
-                if (Platform.isIOS) iOSPermissionOverlay(c),
+                //if (Platform.isIOS) iOSPermissionOverlay(c),
               ],
             ),
           ),

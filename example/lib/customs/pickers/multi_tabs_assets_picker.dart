@@ -562,7 +562,7 @@ class MultiTabAssetPickerBuilder extends DefaultAssetPickerBuilderDelegate {
                   appleOSLayout(context)
                 else
                   androidLayout(context),
-                if (Platform.isIOS) iOSPermissionOverlay(context),
+                //if (Platform.isIOS) iOSPermissionOverlay(context),
               ],
             ),
           ),

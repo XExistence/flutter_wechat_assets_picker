@@ -212,8 +212,8 @@ class EnglishAssetPickerTextDelegate extends AssetPickerTextDelegate {
       'Click to update accessible assets';
 
   @override
-  String get accessAllTip => 'App can only access limited assets on the device. '
-      'Go to system settings and allow app to access assets if missing in selection.';
+  String get accessAllTip => 'We currently have limited access to assets on your device. '
+      'If the assets you are looking for are missing, please go to system settings and ensure they are added to the app\'s selection.';
 
   @override
   String get goToSystemSettings => 'Go to system settings';
